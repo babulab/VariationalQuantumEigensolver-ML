@@ -8,13 +8,14 @@ from math import pi
 import math
 import matplotlib.pylab as plt
 from itertools import product
-from qiskit.quantum_info import Statevector, Operator, DensityMatrix, state_fidelity
+from qiskit.quantum_info import Statevector, Operator, DensityMatrix, state_fidelity, SparsePauliOp
 import itertools
 import warnings
 from smt.sampling_methods import LHS
 warnings.filterwarnings("ignore")
 import json
 import uuid
+from qiskit.primitives import Estimator
 
 
 #%% QOC functions
@@ -129,11 +130,12 @@ def get_expectation_values_hamiltonian(circuit, thetas, initial_state, H):
     expectation_values = []
     for pauli_op in H:
         coefficient = pauli_op.coeffs
-        observable = pauli_op.to_matrix()
-        expectation = coefficient * statevector.expectation_value(observable)
+        observable = pauli_op.paulis 
+        observable = SparsePauliOp(observable, coefficient)
+        expectation = statevector.expectation_value(observable)
+
         expectation_values.append( expectation.real )
     expectation_values = -np.array(expectation_values) #Minus because the source code (QOC) was made to maximise, with the minus the code minimise
-    expectation_values = expectation_values.squeeze(-1)
     return expectation_values, np.sum(expectation_values)
 
 
@@ -156,6 +158,22 @@ def get_real_samples_vqe(circuit, n_samples, n_thetas, initial_state, H, type_sa
     return X_out, np.real(expectations_values), np.sum(expectations_values,1)   
 
 
+
+def get_expectation_values_hamiltonian_estimator(circuit, thetas, initial_state, H):
+    # Given a circuit, Hamiltonian, initial_state and theta angles. The expectation values are returned
+
+    # Create the circuit
+    circ = circuit(thetas, initial_state)
+    # Initialize the Estimator
+    estimator = Estimator()
+    # Prepare observables
+    observables = [SparsePauliOp(pauli_op.paulis, pauli_op.coeffs) for pauli_op in H]
+    # Run the estimator
+    job = estimator.run([circ] * len(observables), observables)
+    result = job.result()
+    # Extract expectation values
+    expectation_values = -np.array(result.values)  # Minus for minimization
+    return expectation_values, np.sum(expectation_values)
 
 #%% General functions
 
