@@ -25,7 +25,7 @@ We plan to enhance the repository with the following features:
 
     - New optimization techniques (Reinforcement Learning is nearly complete)
     - Incorporate the use of the qiskit_algorithm Ground state solver, with th aim of improving estimation
-    - A larger benchmark to compare different optimization techniques.
+    - A larger benchmark to compare different optimisation techniques.
     - Improvements to the existing Bayesian Optimisation framework, including:
         - Parallelize training of the GPs associated with the observables
         - Enhancing the evaluation of GP performance
