@@ -15,16 +15,17 @@ The workflow involves conducting experiments iteratively during the optimisation
 
 
 
-Currently, the repository implements optimisation techniques based on Bayesian Optimisation, L_BFGS_B and SPSA.
+Currently, the repository implements optimisation techniques based on Bayesian Optimisation, Reinforcement Learning, L_BFGS_B and SPSA.
 
 A key goal of this repository is to provide a flexible and accessible platform for research. To achieve this, the components of the algorithm are lightly packaged, allowing for easy customization and modification.
+
+If you are interested in visiting the final results of this repository you can check out the jupyter notebook [Results](https://github.com/babulab/VariationalQuantumEigensolver-ML/blob/main/notebooks/Results.ipynb).
+
 
 ## Future Updates 
 
 We plan to enhance the repository with the following features:
 
-    - New optimization techniques (Reinforcement Learning is nearly complete)
-    - Incorporate the use of the qiskit_algorithm Ground state solver, with th aim of improving estimation
     - A larger benchmark to compare different optimisation techniques.
     - Improvements to the existing Bayesian Optimisation framework, including:
         - Parallelize training of the GPs associated with the observables
