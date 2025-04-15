@@ -2,7 +2,7 @@
 
 
 ##  Overview
-This repository explores the intersection of **Machine Learning (ML)** and quantum computing by applying ML techniques to the **Variational Quantum Eigensolver (VQE)*. VQE is a hybrid quantum-classical algorithm used to estimate the ground state energy of quantum systems, particularly useful for solving complex Hamiltonians in quantum chemistry and physics.
+This repository explores the intersection of **Machine Learning (ML)** and quantum computing by applying ML techniques to the **Variational Quantum Eigensolver (VQE)**. VQE is a hybrid quantum-classical algorithm used to estimate the ground state energy of quantum systems, particularly useful for solving complex Hamiltonians in quantum chemistry and physics.
 
 The focus here is on estimating the ground state energy of two key molecules: hydrogen $H_2$ and water $H_2O$. This approach reflects experimental realities where the ansatz is fixed, meaning the number of parameters remains constant throughout the VQE process.
 
