@@ -1,0 +1,23 @@
+molecule:
+  atoms: "H 0 0 0; H 0 0 0.735"
+  #atoms: "O 0 0 0; H 0.757 0.586 0; H -0.757 0.586 0"
+  basis: "sto3g"
+  charge: 0
+  spin: 0
+  unit: "ANGSTROM"
+
+ansatz:
+  type: "UCCSD"  # Options: UCCSD, TwoLocal
+  options:
+    reps: 1
+    rotation_blocks: "ry" # Only used by TwoLocal
+    entanglement_blocks: "cz" # Only used by TwoLocal
+
+vqe:
+  n_run: 5
+  total_timesteps: 200
+  type_optimiser: "ppo" # Options: td3, ppo
+  n_trials: 10  #n_trials hyperparameters 
+
+output_path_results: "../../results/best_trial_h2_rl_ppo.json" #The model name also goes here 
+

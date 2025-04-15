@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 import json
 import uuid
 from qiskit.primitives import Estimator
-
+import yaml
 
 #%% QOC functions
 
@@ -122,10 +122,10 @@ def expectation2eigenvalue(expectations,coefficients_array, num_qubits):
   
 
 
-def get_expectation_values_hamiltonian(circuit, thetas, initial_state, H):
+def get_expectation_values_hamiltonian(circuit, ansatz, thetas, initial_state, H):
     #Given a circuit, Hamiltonian, initial_state and theta angles. The expectation values ​​are returned
 
-    circ = circuit(thetas, initial_state)
+    circ = circuit(ansatz, thetas, initial_state)
     statevector = Statevector.from_instruction(circ)
     expectation_values = []
     for pauli_op in H:
@@ -139,7 +139,7 @@ def get_expectation_values_hamiltonian(circuit, thetas, initial_state, H):
     return expectation_values, np.sum(expectation_values)
 
 
-def get_real_samples_vqe(circuit, n_samples, n_thetas, initial_state, H, type_sampling = 'Random_Uniform'):
+def get_real_samples_vqe(circuit, ansatz, n_samples, n_thetas, initial_state, H, type_sampling = 'Random_Uniform'):
    
     if type_sampling=='Random_Uniform':
         X_out = get_new_samples(n_samples, n_thetas)
@@ -150,7 +150,7 @@ def get_real_samples_vqe(circuit, n_samples, n_thetas, initial_state, H, type_sa
     expectations_values = []
     for j in range(n_samples):
         thetas_new = X_out[j]
-        expectation_values, _ = get_expectation_values_hamiltonian(circuit, thetas_new[np.newaxis,:], initial_state, H)
+        expectation_values, _ = get_expectation_values_hamiltonian(circuit, ansatz, thetas_new[np.newaxis,:], initial_state, H)
         expectations_values.append(expectation_values)
 
     expectations_values =  np.array(expectations_values)
@@ -202,6 +202,11 @@ class CustomEncoder(json.JSONEncoder):
        
         return json.JSONEncoder.default(self, obj)
 
+def load_yaml_config(yaml_file):
+    with open(yaml_file, "r") as f:
+        config = yaml.safe_load(f)
+
+    return config
 
 
 

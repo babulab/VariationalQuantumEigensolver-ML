@@ -13,7 +13,6 @@ import itertools
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import norm
 from tqdm.auto import tqdm
-#from tqdm import tqdm
 import time
 import warnings
 from smt.sampling_methods import LHS
@@ -71,9 +70,6 @@ def train_surrogate_models_gp(args):
         initial_length_scale = params.get('initial_lengthscale', 1.0)
         initial_noise_likelihood = params.get('initial_noise', 0.1) 
         initial_output_scale = params.get('initial_output_scale', 0.1) 
-
-        #gpytorch.settings.max_cholesky_size(1.0e-2) 
-        #gpytorch.settings.cholesky_jitter(1.0e-2) 
 
         likelihood = gpytorch.likelihoods.GaussianLikelihood(noise_constraint=gpytorch.constraints.GreaterThan(1e-12))
         
@@ -232,7 +228,6 @@ class WrappedGPyTorchModelMultiGPFidelity(GPyTorchModel):
         return y_mean_pred_unscaled, y_covar_pred_unscaled
 
 
-    #Aqui sacare el add
     def get_fidelity_from_expectations_values_withGradients(self, X_data):
 
             n_surrogates_models = len(self.surrogate_models['gp_model'])
